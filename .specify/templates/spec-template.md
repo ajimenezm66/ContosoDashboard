@@ -95,6 +95,15 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Constitution Alignment *(mandatory when feature touches security, storage, or integrations)*
+
+- **CA-001**: Define which roles or user relationships can view, create, update, delete, share,
+  or download the feature data.
+- **CA-002**: Define how the feature remains offline-capable in the training environment and
+  whether a new infrastructure abstraction is required for future cloud migration.
+- **CA-003**: Define validation limits, persistence ordering, and audit or notification side
+  effects for each state-changing workflow.
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
@@ -113,3 +122,5 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+
+Include performance or responsiveness criteria whenever they materially affect the design.

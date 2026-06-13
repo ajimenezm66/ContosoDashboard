@@ -133,6 +133,17 @@ public interface IFileStorageService
 
 **File upload best practice:** When implementing file uploads, generate unique file paths (using GUID) before database insertion to prevent duplicate key violations and orphaned records.
 
+## Development Guardrails
+
+- Keep training features offline-capable by default and isolate production-oriented infrastructure
+   behind interfaces that can be swapped through dependency injection.
+- Enforce authorization in both the UI surface and the service layer; page protection alone is not
+   sufficient for data, file, or sharing operations.
+- Preserve the existing application boundaries: UI in Pages and Shared, business rules in Services,
+   persistence in Data and Models, composition in Program.cs.
+- Before handoff, run the narrowest relevant validation for the change and `dotnet build` from the
+   `ContosoDashboard/ContosoDashboard` directory.
+
 ## Getting Started
 
 ### Prerequisites

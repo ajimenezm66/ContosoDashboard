@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Offline-first delivery: confirm the feature works with the local training stack or document the
+  interface boundary that keeps future cloud migrations swappable.
+- Access control: identify the roles, ownership rules, and service-layer authorization checks for
+  every new read, mutation, upload, download, or share flow.
+- Layering: map UI, Services, Data, and infrastructure changes to the existing repository
+  boundaries without placing business logic in Razor components.
+- Verification: list story-scoped validation and the minimum repository-wide validation command
+  (`dotnet build` from `ContosoDashboard/ContosoDashboard`).
+- Data and file lifecycle: for persistence-affecting work, define validation rules, save order,
+  storage location, and any audit or notification side effects.
 
 ## Project Structure
 
@@ -48,51 +57,25 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+ContosoDashboard/
+├── Data/
+├── Models/
+├── Pages/
+├── Services/
+├── Shared/
+├── wwwroot/
+├── Program.cs
+└── ContosoDashboard.csproj
 
 tests/
-├── contract/
 ├── integration/
 └── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: Assume the existing Blazor Server application structure above unless the
+feature explicitly justifies a new top-level directory or supporting test project.
 
 ## Complexity Tracking
 

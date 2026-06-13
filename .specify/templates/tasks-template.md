@@ -8,7 +8,9 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: The examples below include test tasks. Tests are OPTIONAL unless the feature spec asks
+for them, but every user story MUST still include explicit validation tasks and the final handoff
+MUST include repository-wide validation with `dotnet build`.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -20,10 +22,13 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- Primary application code lives in `ContosoDashboard/Data`, `ContosoDashboard/Models`,
+  `ContosoDashboard/Pages`, `ContosoDashboard/Services`, `ContosoDashboard/Shared`, and
+  `ContosoDashboard/wwwroot`.
+- Add tests in a repository-level `tests/` location only when the plan introduces automated
+  coverage or a dedicated test project.
+- File-backed features MUST keep stored assets outside `ContosoDashboard/wwwroot` and route access
+  through authorized application code.
 
 <!-- 
   ============================================================================
@@ -63,11 +68,11 @@ description: "Task list template for feature implementation"
 Examples of foundational tasks (adjust based on your project):
 
 - [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
+- [ ] T005 [P] Extend service-layer authorization and role checks for new access paths
+- [ ] T006 [P] Introduce or extend infrastructure abstractions for storage or integrations
 - [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T008 Configure error handling, logging, and audit capture for state changes
+- [ ] T009 Define configuration or filesystem setup needed for offline execution
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -93,7 +98,7 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
 - [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
 - [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T017 [US1] Add logging, authorization checks, and story-level validation for user story 1 operations
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -155,7 +160,7 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX Performance optimization across all stories
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
-- [ ] TXXX Run quickstart.md validation
+- [ ] TXXX Run the narrowest feature validation plus `dotnet build`
 
 ---
 
@@ -246,6 +251,7 @@ With multiple developers:
 - [Story] label maps task to specific user story for traceability
 - Each user story should be independently completable and testable
 - Verify tests fail before implementing
+- Include explicit authorization, validation, and audit tasks whenever a story changes access or persistence behavior
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
